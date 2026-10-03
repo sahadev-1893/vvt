@@ -1,0 +1,6 @@
+{
+  "name": "Vishwa Vinayak Trust Group of Institutions",
+  "description": "Official institutional portal for Vishwa Vinayak Trust Group of Institutions, Khireitangiri, Kendujhar, Odisha. Managing VVDC, VVHSS, academic wings, notices, events, admissions, career applications, and dynamic CMS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
