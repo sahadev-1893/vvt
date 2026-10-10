@@ -129,6 +129,8 @@ export const EventPage: React.FC<EventPageProps> = ({ events, wings }) => {
                   <img
                     src={evt.coverImage}
                     alt={evt.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-[100px] object-cover group-hover:scale-105 transition-transform duration-500"
                     style={{ height: '100px' }}
                   />

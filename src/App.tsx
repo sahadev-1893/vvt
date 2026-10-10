@@ -19,6 +19,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { AdminAuditModal } from './components/AdminAuditModal';
+import { NewsTicker } from './components/NewsTicker';
 
 // Public Pages
 import { HomePage } from './pages/HomePage';
@@ -30,12 +31,14 @@ import { EventPage } from './pages/EventPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { ContactPage } from './pages/ContactPage';
 import { CareerPage } from './pages/CareerPage';
+import { StudentResultSearch } from './pages/StudentResultSearch';
 
 // Admin Pages & Tabs
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
 import { AdminSignUpPage } from './pages/admin/AdminSignUpPage';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminDashboardTab } from './pages/admin/AdminDashboardTab';
+import { AdminResultsTab } from './pages/admin/AdminResultsTab';
 import { AdminWingsTab } from './pages/admin/AdminWingsTab';
 import { AdminExpertsTab } from './pages/admin/AdminExpertsTab';
 import { AdminSlidersTab } from './pages/admin/AdminSlidersTab';
@@ -217,6 +220,26 @@ function AppContent() {
               setAdminTab('experts');
               setOpenExpertModalInitial(true);
             }}
+          />
+        )}
+
+        {(adminTab === 'results' ||
+          adminTab === 'result-statistics' ||
+          adminTab === 'bulk-results' ||
+          adminTab === 'publish-controls' ||
+          adminTab === 'students-dir') && (
+          <AdminResultsTab
+            initialSubTab={
+              adminTab === 'result-statistics'
+                ? 'statistics'
+                : adminTab === 'bulk-results'
+                ? 'bulk'
+                : adminTab === 'publish-controls'
+                ? 'publish'
+                : adminTab === 'students-dir'
+                ? 'students'
+                : 'overview'
+            }
           />
         )}
 
@@ -492,6 +515,9 @@ function AppContent() {
         onOpenSearch={() => setIsSearchOpen(true)}
       />
 
+      {/* Dynamic News Ticker below Header: Fetches & displays latest exam result publications alongside institutional notices */}
+      <NewsTicker notices={notices} onNavigate={navigate} />
+
       {/* Main Content Router */}
       <main className="flex-1">
         {(currentPath === '/' ||
@@ -502,7 +528,10 @@ function AppContent() {
             currentPath !== '/gallery' &&
             currentPath !== '/experts' &&
             currentPath !== '/contact' &&
-            currentPath !== '/career')) && (
+            currentPath !== '/career' &&
+            currentPath !== '/results' &&
+            currentPath !== '/result' &&
+            currentPath !== '/check-result')) && (
           <HomePage
             wings={wings}
             experts={experts}
@@ -512,6 +541,12 @@ function AppContent() {
             settings={settings}
             onNavigate={navigate}
           />
+        )}
+
+        {(currentPath === '/results' ||
+          currentPath === '/result' ||
+          currentPath === '/check-result') && (
+          <StudentResultSearch onNavigate={navigate} />
         )}
 
         {currentPath === '/wings' && (

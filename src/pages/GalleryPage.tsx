@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GalleryAlbum, GalleryCategory, GalleryPhoto } from '../types';
+import { LazyImage } from '../components/LazyImage';
 import {
   Image as ImageIcon,
   ChevronLeft,
@@ -101,10 +102,10 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ albums }) => {
               onClick={() => openLightbox(index)}
               className="cursor-pointer group relative bg-slate-900 rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 aspect-[4/3]"
             >
-              <img
+              <LazyImage
                 src={photo.url}
                 alt={photo.caption}
-                loading="lazy"
+                wrapperClassName="w-full h-full"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
@@ -162,10 +163,11 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ albums }) => {
 
           {/* Photo & Caption */}
           <div className="max-w-5xl max-h-[85vh] flex flex-col items-center">
-            <img
+            <LazyImage
               src={filteredPhotos[activePhotoIndex].url}
               alt={filteredPhotos[activePhotoIndex].caption}
-              className="max-h-[72vh] max-w-full object-contain rounded-xl shadow-2xl"
+              wrapperClassName="max-h-[72vh] max-w-full rounded-xl shadow-2xl"
+              className="max-h-[72vh] max-w-full object-contain rounded-xl"
             />
             <div className="mt-4 text-center text-white space-y-1 px-4">
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-white/10 px-2.5 py-0.5 rounded-full">

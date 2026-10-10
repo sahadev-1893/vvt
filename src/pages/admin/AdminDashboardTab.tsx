@@ -24,7 +24,10 @@ import {
   CheckCircle,
   FileDown,
   ExternalLink,
+  Search,
+  BarChart3,
 } from 'lucide-react';
+import { ResultStatisticsPanel } from '../../components/ResultStatisticsPanel';
 
 interface AdminDashboardTabProps {
   wings: Wing[];
@@ -320,6 +323,15 @@ export const AdminDashboardTab: React.FC<AdminDashboardTabProps> = ({
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Result Statistics & Publication Trends Panel */}
+      <div className="pt-2">
+        <ResultStatisticsPanel
+          onNavigateSubTab={(subTab) => {
+            onNavigateTab(subTab === 'publish' ? 'publish-controls' : 'results');
+          }}
+        />
       </div>
 
       {/* Recent Career Applications Table */}

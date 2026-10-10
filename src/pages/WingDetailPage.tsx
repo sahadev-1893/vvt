@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Wing, Notice, EventItem, GalleryAlbum, Expert } from '../types';
+import { LazyImage } from '../components/LazyImage';
 import {
   GraduationCap,
   MapPin,
@@ -17,6 +18,7 @@ import {
   ExternalLink,
   Sparkles,
   Briefcase,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 interface WingDetailPageProps {
@@ -32,11 +34,13 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
   wing,
   notices,
   events,
-  albums,
+  albums = [],
   experts = [],
   onNavigate,
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'courses' | 'faculty' | 'facilities' | 'notices'>('overview');
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'courses' | 'faculty' | 'facilities' | 'gallery' | 'notices'
+  >('overview');
 
   // Filter wing specific notices or general ones
   const wingNotices = notices.filter(
@@ -51,16 +55,28 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
     (exp) => exp.wingId === wing.id || exp.wingId === 'all'
   );
 
+  // Filter gallery photos relevant to this wing
+  const wingPhotos = albums
+    .filter(
+      (a) =>
+        a.isPublished &&
+        (a.wingId === wing.id ||
+          a.wingId === 'all' ||
+          a.category?.toLowerCase() === wing.shortName?.toLowerCase())
+    )
+    .flatMap((a) => a.photos);
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* 1. Wing Hero Banner */}
       <section className="relative w-full h-[360px] md:h-[440px] bg-slate-950 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${wing.coverImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/75 to-slate-900/50" />
-        </div>
+        <LazyImage
+          src={wing.coverImage}
+          alt={wing.name}
+          wrapperClassName="absolute inset-0 w-full h-full"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/75 to-slate-900/50 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-12">
           {/* Back Button */}
@@ -107,6 +123,7 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
               { id: 'courses', label: `Courses (${wing.courses.length})` },
               { id: 'faculty', label: `Faculty (${wingExperts.length})` },
               { id: 'facilities', label: 'Campus Facilities' },
+              { id: 'gallery', label: `Campus Gallery (${wingPhotos.length})` },
               { id: 'notices', label: 'Wing Notices' },
             ].map((tab) => (
               <button
@@ -192,10 +209,11 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
 
                   <div className="flex flex-col sm:flex-row items-start gap-6">
                     {wing.principalPhoto && (
-                      <img
+                      <LazyImage
                         src={wing.principalPhoto}
                         alt={wing.principalName}
-                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-amber-500/40 shadow-sm shrink-0"
+                        wrapperClassName="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-amber-500/40 shadow-sm shrink-0"
+                        className="w-full h-full object-cover"
                       />
                     )}
                     <div className="space-y-3">
@@ -348,10 +366,11 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
                       key={exp.id}
                       className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs flex items-start gap-4 hover:border-amber-400 transition-colors"
                     >
-                      <img
+                      <LazyImage
                         src={exp.photo}
                         alt={exp.name}
-                        className="w-16 h-16 rounded-2xl object-cover border border-slate-100 shadow-xs shrink-0"
+                        wrapperClassName="w-16 h-16 rounded-2xl border border-slate-100 shadow-xs shrink-0"
+                        className="w-full h-full object-cover"
                       />
                       <div className="min-w-0 flex-1 space-y-1">
                         <h3 className="font-heading font-bold text-slate-900 text-sm truncate">
@@ -411,6 +430,58 @@ export const WingDetailPage: React.FC<WingDetailPageProps> = ({
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Gallery Tab */}
+            {activeTab === 'gallery' && (
+              <div className="space-y-6 animate-in fade-in duration-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h2 className="font-heading text-xl sm:text-2xl font-black text-slate-900">
+                      {wing.shortName} Campus & Academic Moments
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-600">
+                      Visual glimpses into daily academic routines, labs, seminars, and sports activities.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => onNavigate('/gallery')}
+                    className="text-xs font-bold text-amber-700 hover:underline self-start sm:self-center"
+                  >
+                    View Full Trust Gallery →
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {wingPhotos.map((photo, pIdx) => (
+                    <div
+                      key={photo.id || pIdx}
+                      className="group relative bg-slate-900 rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 aspect-[4/3]"
+                    >
+                      <LazyImage
+                        src={photo.url}
+                        alt={photo.caption}
+                        wrapperClassName="w-full h-full"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                        <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">
+                          {photo.category}
+                        </span>
+                        <p className="text-xs font-semibold text-white line-clamp-2 mt-0.5">
+                          {photo.caption}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {wingPhotos.length === 0 && (
+                  <div className="p-8 text-center bg-white rounded-2xl border border-slate-200 text-slate-500 text-xs">
+                    No gallery photos published specifically for this wing yet.
+                  </div>
+                )}
               </div>
             )}
 

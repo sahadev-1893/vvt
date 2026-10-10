@@ -30,6 +30,11 @@ export const SUPABASE_TABLES = {
   ADMINS: 'vvt_admins',
   SETTINGS: 'vvt_settings',
   LOGS: 'vvt_logs',
+  STUDENT_RESULTS: 'vvt_student_results',
+  EXAMINATIONS: 'vvt_examinations',
+  SUBJECTS: 'vvt_subjects',
+  STUDENTS: 'vvt_students',
+  RESULT_AUDIT: 'vvt_result_audit_logs',
 };
 
 // SQL Schema for the user to execute in Supabase SQL Editor if creating tables

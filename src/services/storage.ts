@@ -647,12 +647,12 @@ const initialEnquiries: ContactEnquiry[] = [
 ];
 
 // Seed Administrators
-// Super Admin: admin@vvt.edu.in / admin123
+// Super Admin: admin@vvt.org.in / admin123
 const initialAdmins: AdminUser[] = [
   {
     id: 'adm-1',
     fullName: 'Mr. Rabinarayana Mohanta (Trust Chairman)',
-    email: 'admin@vvt.edu.in',
+    email: 'admin@vvt.org.in',
     mobile: '+91 9437238689',
     role: 'super_admin',
     status: 'active',
@@ -730,7 +730,7 @@ const initialLogs: ActivityLog[] = [
   {
     id: 'log-1',
     adminName: 'Mr. Rabinarayana Mohanta (Trust Chairman)',
-    adminEmail: 'admin@vvt.edu.in',
+    adminEmail: 'admin@vvt.org.in',
     action: 'SYSTEM_INITIALIZATION',
     module: 'System',
     recordTitle: 'Portal Initialized with VVDC & VVHSS Wings',
@@ -931,13 +931,17 @@ export const storageService = {
     if (!this.getAdmins().length) {
       this.setAdmins(initialAdmins);
     } else {
-      // Ensure super admin Chairman name reflects Mr. Rabinarayana Mohanta (Trust Chairman)
+      // Ensure super admin Chairman name and email reflect Mr. Rabinarayana Mohanta (Trust Chairman) & admin@vvt.org.in
       const currentAdmins = this.getAdmins();
       let changed = false;
       currentAdmins.forEach((a) => {
-        if (a.id === 'adm-1' || a.role === 'super_admin' || a.email.toLowerCase() === 'admin@vvt.edu.in') {
+        if (a.id === 'adm-1' || a.role === 'super_admin' || a.email.toLowerCase() === 'admin@vvt.edu.in' || a.email.toLowerCase() === 'admin@vvt.org.in') {
           if (a.fullName !== 'Mr. Rabinarayana Mohanta (Trust Chairman)') {
             a.fullName = 'Mr. Rabinarayana Mohanta (Trust Chairman)';
+            changed = true;
+          }
+          if (a.email !== 'admin@vvt.org.in') {
+            a.email = 'admin@vvt.org.in';
             changed = true;
           }
         }
@@ -949,9 +953,17 @@ export const storageService = {
 
     // Also update any active session for super admin
     const activeSession = this.getCurrentSession();
-    if (activeSession && (activeSession.id === 'adm-1' || activeSession.role === 'super_admin' || activeSession.email?.toLowerCase() === 'admin@vvt.edu.in')) {
+    if (activeSession && (activeSession.id === 'adm-1' || activeSession.role === 'super_admin' || activeSession.email?.toLowerCase() === 'admin@vvt.edu.in' || activeSession.email?.toLowerCase() === 'admin@vvt.org.in')) {
+      let sessionChanged = false;
       if (activeSession.fullName !== 'Mr. Rabinarayana Mohanta (Trust Chairman)') {
         activeSession.fullName = 'Mr. Rabinarayana Mohanta (Trust Chairman)';
+        sessionChanged = true;
+      }
+      if (activeSession.email !== 'admin@vvt.org.in') {
+        activeSession.email = 'admin@vvt.org.in';
+        sessionChanged = true;
+      }
+      if (sessionChanged) {
         this.setCurrentSession(activeSession);
       }
     }
@@ -1698,7 +1710,7 @@ export const storageService = {
     const newLog: ActivityLog = {
       id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       adminName: currentAdmin ? currentAdmin.fullName : 'System Administrator',
-      adminEmail: currentAdmin ? currentAdmin.email : 'admin@vvt.edu.in',
+      adminEmail: currentAdmin ? currentAdmin.email : 'admin@vvt.org.in',
       action,
       module,
       recordTitle,

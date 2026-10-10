@@ -179,6 +179,8 @@ export const ExpertsPage: React.FC<ExpertsPageProps> = ({
                     <img
                       src={exp.photo}
                       alt={exp.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-20 h-20 rounded-2xl object-cover border-2 border-amber-500/20 shadow-md group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center border-2 border-white">

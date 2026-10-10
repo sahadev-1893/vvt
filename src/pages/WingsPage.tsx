@@ -1,5 +1,6 @@
 import React from 'react';
 import { Wing } from '../types';
+import { LazyImage } from '../components/LazyImage';
 import {
   GraduationCap,
   ArrowRight,
@@ -48,12 +49,13 @@ export const WingsPage: React.FC<WingsPageProps> = ({ wings, onNavigate }) => {
             >
               {/* Image banner */}
               <div className="relative h-64 overflow-hidden">
-                <img
+                <LazyImage
                   src={wing.coverImage}
                   alt={wing.name}
+                  wrapperClassName="w-full h-full"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent pointer-events-none" />
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex items-center gap-2">

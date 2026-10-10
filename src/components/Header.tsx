@@ -16,6 +16,7 @@ import {
   Image as ImageIcon,
   Send,
   Briefcase,
+  Award,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -37,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   const activeWings = wings.filter((w) => w.status === 'active');
 
   const navItems = [
-    { label: 'Home', path: '/' },
+    { label: 'Home', path: '/' },   
     {
       label: 'Wings',
       path: '/wings',
@@ -98,10 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Quick Notice Pill & Career Link */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full text-[11px] font-medium border border-amber-500/30">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span>Admissions Open 2026-27</span>
-            </div>
+            
             <button
               onClick={() => handleNavClick('/career')}
               className="cursor-pointer text-slate-200 hover:text-amber-300 flex items-center gap-1 text-[11px] font-semibold transition-colors"
@@ -226,14 +224,6 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-label="Search"
               >
                 <Search className="w-4 h-4" />
-              </button>
-
-              {/* Admission / Contact CTA Button */}
-              <button
-                onClick={() => handleNavClick('/contact')}
-                className="ml-3 px-4 py-2 rounded-lg bg-red-700 hover:bg-red-800 text-white text-xs font-bold uppercase tracking-wider shadow-sm hover:shadow transition-all cursor-pointer"
-              >
-                Admission Helpdesk
               </button>
             </nav>
 

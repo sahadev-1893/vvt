@@ -263,3 +263,145 @@ export interface SiteSettings {
     ogDescription: string;
   };
 }
+
+// -------------------------------------------------------------
+// STUDENT RESULT PUBLISHING SYSTEM TYPES
+// -------------------------------------------------------------
+
+export type ExaminationType = 'Annual' | 'Half-Yearly' | 'Semester' | 'Supplementary';
+export type PublicationStatus = 'published' | 'draft' | 'unpublished';
+export type ResultStatus = 'PASS' | 'FAIL' | 'COMPARTMENT' | 'WITHHELD' | 'PROMOTED';
+
+export interface StudentRecord {
+  id: string;
+  studentId: string;
+  studentName: string;
+  rollNumber: string;
+  registrationNumber: string;
+  fatherName: string;
+  motherName: string;
+  dateOfBirth: string; // YYYY-MM-DD
+  gender: 'Male' | 'Female' | 'Other';
+  className: string;
+  section: string;
+  academicYear: string;
+  photoUrl?: string;
+  createdAt: string;
+}
+
+export interface ExaminationRecord {
+  id: string;
+  examinationName: string;
+  examinationType: ExaminationType;
+  academicYear: string;
+  classes: string[];
+  publicationStatus: PublicationStatus;
+  publishedAt?: string;
+  heldIn?: string; // e.g. "February - March 2026"
+  createdAt: string;
+}
+
+export interface SubjectDefinition {
+  id: string;
+  subjectCode: string;
+  subjectName: string;
+  fullMarks: number;
+  passMarks: number;
+  theoryMarks?: number;
+  practicalMarks?: number;
+  className: string;
+  isActive: boolean;
+}
+
+export interface SubjectMarkRecord {
+  subjectCode: string;
+  subjectName: string;
+  fullMarks: number;
+  passMarks: number;
+  marksObtained: number;
+  practicalMarksObtained?: number;
+  grade: string;
+  status: 'Pass' | 'Fail' | 'Absent';
+  remarks?: string;
+}
+
+export interface StudentResultRecord {
+  id: string;
+  studentId: string;
+  studentName: string;
+  rollNumber: string;
+  registrationNumber: string;
+  fatherName: string;
+  motherName: string;
+  dateOfBirth: string;
+  gender?: string;
+  className: string;
+  section: string;
+  academicYear: string;
+  examinationId: string;
+  examinationName: string;
+  examinationType: ExaminationType;
+  subjects: SubjectMarkRecord[];
+  totalFullMarks: number;
+  totalMarksObtained: number;
+  percentage: number;
+  grade: string;
+  resultStatus: ResultStatus;
+  division?: string;
+  remarks: string;
+  publicationStatus: PublicationStatus;
+  publishedAt?: string;
+  verificationCode: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ResultAuditRecord {
+  id: string;
+  adminId: string;
+  adminName: string;
+  action: 'CREATE_RESULT' | 'UPDATE_MARKS' | 'PUBLISH_RESULT' | 'UNPUBLISH_RESULT' | 'BULK_UPLOAD' | 'DELETE_RESULT';
+  recordType: 'StudentResult' | 'Examination' | 'Student';
+  recordId: string;
+  details: string;
+  timestamp: string;
+}
+
+export interface ExaminationNotice {
+  id: string;
+  title: string;
+  date: string;
+  category: 'Result' | 'Schedule' | 'Re-evaluation' | 'Admit Card' | 'General';
+  description: string;
+  isImportant?: boolean;
+}
+
+export interface ResultSearchLog {
+  id: string;
+  timestamp: string;
+  rollNumber: string;
+  examinationType?: string;
+  academicYear?: string;
+  className?: string;
+  success: boolean;
+  statusReason?: 'NOT_FOUND' | 'UNPUBLISHED' | 'EXAM_MISMATCH' | 'SUCCESS';
+  studentName?: string;
+}
+
+export interface DailySearchMetric {
+  date: string; // YYYY-MM-DD
+  dayLabel: string; // e.g., 'Mon 04/06'
+  totalSearches: number;
+  successfulSearches: number;
+  notFoundSearches: number;
+  unpublishedSearches: number;
+}
+
+export interface PublicationTrendMetric {
+  date: string; // YYYY-MM-DD
+  dayLabel: string;
+  publishedCount: number;
+  cumulativePublished: number;
+  examName?: string;
+}
+

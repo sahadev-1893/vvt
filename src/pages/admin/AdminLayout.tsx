@@ -24,6 +24,8 @@ import {
   Shield,
   Home,
   Database,
+  FileSpreadsheet,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface MenuItem {
@@ -63,6 +65,16 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       title: 'CORE',
       items: [
         { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+      ],
+    },
+    {
+      title: 'EXAMINATION & RESULTS',
+      items: [
+        { id: 'results', label: 'Student Results & Marks', icon: Award },
+        { id: 'result-statistics', label: 'Result Statistics & Trends', icon: BarChart3 },
+        { id: 'bulk-results', label: 'Bulk Upload (Excel/CSV)', icon: FileSpreadsheet },
+        { id: 'publish-controls', label: 'Publication Controls', icon: CheckCircle2 },
+        { id: 'students-dir', label: 'Student Directory', icon: Users },
       ],
     },
     {

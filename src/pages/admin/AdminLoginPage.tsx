@@ -56,7 +56,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
   const handleDirectSuperAdminLogin = async () => {
     setLoading(true);
     setError('');
-    const res = await login('admin@vvt.edu.in', 'admin123');
+    const res = await login('admin@vvt.org.in', 'admin123');
     setLoading(false);
     if (res.success) {
       onNavigate('/admin/dashboard');
@@ -108,7 +108,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@vvt.edu.in"
+                  placeholder="admin@vvt.org.in"
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 text-xs sm:text-sm"
                 />
               </div>
@@ -189,7 +189,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
-                onClick={() => handleQuickDemoFill('admin@vvt.edu.in')}
+                onClick={() => handleQuickDemoFill('admin@vvt.org.in')}
                 className="cursor-pointer py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-semibold border border-slate-700 transition-colors"
               >
                 Super Admin
@@ -250,7 +250,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onNavigate }) =>
                 type="email"
                 value={forgotEmail}
                 onChange={(e) => setForgotEmail(e.target.value)}
-                placeholder="admin@vvt.edu.in"
+                placeholder="admin@vvt.org.in"
                 className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white"
               />
             )}

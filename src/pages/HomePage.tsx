@@ -363,6 +363,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <img
                     src={wing.coverImage}
                     alt={wing.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
@@ -491,6 +493,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <img
                       src={exp.photo}
                       alt={exp.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-44 rounded-2xl object-cover border border-slate-800 group-hover:scale-[1.02] transition-transform duration-300"
                     />
                     <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-slate-950/80 backdrop-blur-md text-amber-300 border border-amber-500/30">
@@ -730,36 +734,6 @@ export const HomePage: React.FC<HomePageProps> = ({
               </span>
               <span className="text-[11px] text-slate-500">Consistent board & degree ranks</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Call to Action: Admissions & Enquiries */}
-      <section className="py-14 bg-gradient-to-r from-amber-500 via-amber-600 to-red-700 text-slate-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center md:text-left">
-            <h3 className="font-heading text-xl sm:text-2xl font-black text-slate-950">
-              Ready to Shape Your Future at Vishwa Vinayak?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-900 font-medium">
-              Admissions for Session 2026-27 are currently open for VVDC (+3 Degree) and VVHSS (+2 School).
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={() => onNavigate('/contact')}
-              className="cursor-pointer px-6 py-3 rounded-xl bg-slate-950 hover:bg-slate-900 text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all"
-            >
-              Contact Admission Desk
-            </button>
-            <a
-              href="tel:+919437238689"
-              className="px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs uppercase tracking-wider shadow transition-all flex items-center gap-2"
-            >
-              <PhoneCall className="w-4 h-4 text-red-700" />
-              <span>+91 9437238689</span>
-            </a>
           </div>
         </div>
       </section>
